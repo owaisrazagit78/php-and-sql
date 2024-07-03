@@ -1,0 +1,42 @@
+CREATE DATABASE institute;
+USE institute;
+CREATE TABLE teachers(
+	teacher_name varchar(255) NOT NULL,
+    teacher_emp_id int PRIMARY KEY NOt NULL,
+    Salary int NOT NULL
+);
+
+CREATE TABLE Batches(
+	batch_code int NOT NULL,
+    teacher_emp_id int NOT NULL,
+    batch_count int NOT NULL,
+    No_of_semester int NOT NULL,
+    institute_name varchar(100) NOT NULL,
+    affiliation varchar(100),
+    FOREIGN KEY ( teacher_emp_id) REFERENCES teachers(teacher_emp_id)
+);
+
+teachers;
+INSERT INTO teachers(teacher_name, teacher_emp_id,Salary) VALUES ("Muhammad Irtiza",111,60000),("Israr Ahmed",112,40000),("Moin Khan",113,65000);
+SELECT * FROM teachers
+
+Batches insert;
+INSERT INTO Batches(batch_code, teacher_emp_id,batch_count,No_of_semester, institute_name,affiliation) VALUES (2201,111,1,6,"Aptech Learning","Pakola Interprize"),(2202,112,2,4,"Aptech Learning","Macter Interprize"),(2203,112,3,3,"Aptech Learning","soorty Interprize");
+SELECT * FROM Batches
+
+
+inner join:
+
+SELECT * FROM teachers
+INNER JOIN Batches ON
+teachers.teacher_emp_id = Batches.teacher_emp_id
+
+left join:SELECT * FROM teachers
+LEFT JOIN Batches ON
+teachers.teacher_emp_id
+
+concat commands
+USE Daraz;
+
+SELECT CONCAT(first_name," ",last_name) AS
+FULLNAME FROM 	customers

@@ -1,0 +1,82 @@
+CREATE DATABASE abSolutions;
+USE abSolutions;
+CREATE TABLE Manager(
+	manager_id int NOt NULL PRIMARY KEY,
+    manager_name varchar(255) NOt NULL,
+    manager_salary int NOT NULL,
+    location varchar(255) NOT NULL
+);
+
+CREATE TABLE HR(
+	HR_id int NOt NULL,
+    HR_name varchar(255) NOt NULL,
+    HR_salary int NOT NULL,
+    location varchar(255) NOT NULL
+);
+
+CREATE TABLE general_manager(
+	genmanager_id int NOt NULL,
+    genmanager_name varchar(255) NOt NULL,
+    genmanager_salary int NOT NULL,
+    location varchar(255) NOT NULL,
+    FOREIGN KEY general_manager(genmanager_id) REFERENCES Manager(manager_id)
+);
+
+
+INSERT INTO Manager(manager_id,manager_name,manager_salary,location) VALUES (2221,"Owais Raza",75500,"Malir Town Karachi"),(2222,"Hammad Azam",78500,"Saddar Town Karachi"),(2223,"Tauqeer Hussain",85500,"Liari Town Karachi");
+SELECT * FROM Manager
+
+INSERT INTO HR(HR_id,HR_name,HR_salary,location) VALUES (111,"Owais Raza",75500,"Malir Town Karachi"),(112,"Hammad Azam",78500,"Saddar Town Karachi"),(113,"Tauqeer Hussain",85500,"Liari Town Karachi");
+SELECT * FROM HR
+
+INSERT INTO general_manager(genmanager_id,genmanager_name,genmanager_salary,location) VALUES (2221,"Anwar Hayat",250000,"Landhi Town Karachi"),(2222,"Asim Bawani",320500,"Defence Town Karachi"),(2223,"Talat Hussain",450500,"Shah Faisal Town Karachi");
+SELECT * FROM Manager
+
+
+ SELECT * FROM Manager;
+-- SELECT * FROM HR;
+-- SELECT * FROM general_manager;
+
+-- SELECT manager_name, location AS city_info FROM Manager;
+
+-- SELECT HR_name, location AS salary_info FROM HR
+
+
+
+union commands:
+USE institute;
+/*CREATE TABLE sudents_a(
+	name varchar(255),
+    id int
+);
+
+CREATE TABLE sudents_b(
+	name varchar(255),
+    id int
+);
+
+CREATE TABLE sudents_c(
+	name varchar(255),
+    id int
+);*/
+
+/*INSERT INTO sudents_a(name,id) VALUES ("owais raza",1),("hammad sheikh",2);
+INSERT INTO sudents_b(name,id) VALUES ("tauqeer hussain",10),("sheroz ali",11);
+INSERT INTO sudents_c(name,id) VALUES ("saim ansari",20),("taqi hassan",21)*/
+
+SELECT name,id FROM sudents_a
+UNION
+SELECT name,id FROM sudents_b
+UNION
+SELECT name,id FROM sudents_c
+
+
+USE daraz;
+/*DELIMITER //
+CREATE PROCEDURE city()
+BEGIN
+SELECT * FROM customers;
+END //
+DELIMITER ;*/
+
+CALL city();
