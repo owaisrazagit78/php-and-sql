@@ -1,67 +1,112 @@
-<?php
-     $connection = mysqli_connect("localhost","root","","institute");
-     if($_SERVER["REQUEST_METHOD"]=="POST"){
-   
-         $name = $_POST['name'];
-         $email = $_POST['email'];
-         $password = $_POST['password'];
-   
-         $insert_query= "INSERT INTO student VALUES ('$name','$email','$password')";
-         $response = mysqli_query($connection,$insert_query);
-   
-   
-         if($response){
-            
-           echo "inserted";
-           header("location:login.php");
-         }
-         else{
-           echo "not inserted";
-         }
-       }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Document</title>
+    <style>
+        * {box-sizing: border-box}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit/register button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity:1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+    </style>
 </head>
 <body>
-
-<div class="container">
-<form method="post">
-      <input type="text " name="name" id="in1" class="input" placeholder="Enter Your Name">
-      <input type="email" name="email" id="in2" class="input" placeholder="Enter Your Email">
-      <input type="password" name="password" id="in3" class="input" placeholder="Enter Your Password">
-      <button type="submit" id="btn">Submit</button>
-     </form>
-    </div>
-    <?php
-        $select_query = "SELECT name,email,password FROM `student` ";
-        $select_conn = mysqli_query($connection,$select_query);
-        if($select_conn){
-            while($row = mysqli_fetch_assoc($select_conn)){
-                $name_get = $row['name'];
-                $email_get = $row['email'];
-                $password_get = $row['password'];
-
-                echo"
-                <div class='card'>
-                <div class='card-body'>
-                    <h5 class='card-title'>$name_get</h5>
-                    <li class='card-text'>$email_get</li>
-                    <li class='card-text'>$password_get</li>
-                </div>
-                </div>
-                ";
+    <?php require 'navbar.php' ?>
+<?php
+    if(isset($_POST["login"])){
+        if(!empty($_POST["name"]) && !empty($_POST["password"])){
+            $user = $_POST['name'];
+            $password = $_POST['password'];
+            
+            $query = mysqli_query($conn, "SELECT * FROM nida WHERE name = '".$user."' AND password = '".$password."'");
+            $numrows = mysqli_num_rows($query);
+            
+            if($numrows != 0){
+                while($row = mysqli_fetch_assoc($query)){
+                    $databasename = $row['name'];
+                    $databasepassword = $row['password']; 
                 }
+
+                if($user == $databasename && $password == $databasepassword) { 
+                    session_start();
+                    $_SESSION['sess_user'] = $user;
+                    header("location: index.php"); 
+                }
+            }
+            else{
+                echo "invalid username or password!";
+            }
+        } else{
+            echo "all fields are required!";
         }
-        else{
-            echo "data is not available";
-        }
-    ?>
+    }
+?>
+<form action="" method="post">
+        <h1>Login Form</h1>
+       
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" required>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <p>New to this page <a href="register.php">Register</a></p>
+        <div>
+            <input type="submit" value="Login" name="register" id="btn">
+        </div>
+    </form>
 </body>
 </html>
